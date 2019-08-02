@@ -5,20 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/css/style.css">
 
-    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
 
-    <script src="https://www.gstatic.com/firebase/6.3.3/firebase-database.js"></script>
     <title>RPS-Multi</title>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <!-- Link to Moment.js  -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="https://meisly.github.io/Bootstrap-portfolio/"><img
+                src="assets/images/avataaars.svg" alt="logo picture"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Play a Different Game
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="https://meisly.github.io/word-guess-game/">9 Lives</a>
+                        <a class="dropdown-item" href="https://meisly.github.io/unit-4-game/">Cat Fighter</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </header>
+    <main class="container">
+        <div id="pick-name-box" class="left">
+            <form id="user-name" class="form-inline">
+                <div class="form-group">
+                    <label for="choose-name" class="form-label name-form">Enter Your Name</label>
+                    <input type="text" class="form-control name-form" id="choose-name">
+                    <button type="submit" id="name-btn" class="btn btn-primary name-form">Sign in</button>
+                </div>
+            </form>
+        </div>
+        <div id="game-box" class="right">
+            <div>Insert Game Here</div>
+        </div>
+        <div id="message-box" class="">
+            <div id="display-messages"></div>
+            <form class="">
+                <input type="text" class="form-control message-form" id="message">
+                <button type="submit" id="message-btn" class="btn btn-primary message-form">Send</button>
+            </form>
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    </main>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>

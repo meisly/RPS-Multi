@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+.main-header {
+    margin: auto;
+    text-align: center;
+}
+.hidden {
+    display: none!important;
+}
+a {
+    text-decoration: none;
+}
+
+.name-form {
+    margin: .5rem;
+}
+.left, .right {
+    display: flex;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
