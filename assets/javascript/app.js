@@ -6,6 +6,7 @@ var messageText = "";
 var timeSent = 0;
 var score = 0;
 
+//###################### Firebase config and Firebase variable ########################################
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyC7SjZGgTfEsSp37XjIY4S9pVHfoBzzlNM",
@@ -24,39 +25,42 @@ var players = database.ref("/players");
 var messages = database.ref("/messages");
 
 var connectedRef = database.ref(".info/connected");
-var con = "";
+var con = "";  // empty variable will hold reference to a firebase object under the players directory. represents user by connection
+
+
+// Keeps track of players who are connected and removes when they disconnect
 connectedRef.on("value", function (snap) {
-  // If they are connected..
   if (snap.val()) {
-    // Add user to the connections list.
+
     con = players.push({
       userName: userName,
       score: score,
     });
 
-    // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
   }
 });
 
-var objDiv = document.getElementById("display-messages");
-objDiv.scrollTop = objDiv.scrollHeight;
 
-var d = $('#display-messages');
-d.scrollTop(d.prop("scrollHeight"));
+//######################### functions for the messenger ###############################################
 
-// onclick functions
+//sign in before playing updates player info in DB. after sign-in messenger and game appear
 $("#name-btn").click(function (event) {
   event.preventDefault();
+  
   userName = $("#choose-name").val();
   $("#pick-name-box").addClass("hidden");
   $("#main-game").removeClass("hidden");
+
+  buttomScroll();
+
   con.update({
     userName: userName,
     score: score,
   })
 })
 
+//checks to make sure user has signed in.  Takes input from form and creates message object which is pushed to the DB
 $("#message-btn").click(function (event) {
   event.preventDefault();
 
@@ -74,20 +78,29 @@ $("#message-btn").click(function (event) {
   }
 })
 
+
+//updates messages window when new message added to DB
 messages.on("child_added", function (snap) {
   messageText = snap.val().message;
   timeSent = snap.val().time;
   sender = snap.val().sender;
   updateMessageDisplay();
+  buttomScroll();
 });
 
 
-
-
+//updates messages in html
 function updateMessageDisplay() {
-  var senderInfo = $("<p>").html(sender + "  " + `<em class="timestamp"> ${timeSent} </em>`);
+  var senderInfo = $("<p class='sender'>").html(sender + "  " + `<em class="timestamp"> ${timeSent} </em>`);
   var messageP = $("<p>").text(messageText);
 
   $("#display-messages").append(senderInfo);
   $("#display-messages").append(messageP);
+}
+
+//keeps messenger window scrolled to bottom
+function buttomScroll () {
+  var d = $('#display-messages');
+  console.log(d.prop("scrollHeight"));
+  d.scrollTop(d.prop("scrollHeight"));
 }

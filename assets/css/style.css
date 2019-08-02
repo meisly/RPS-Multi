@@ -11,7 +11,10 @@
 a {
     text-decoration: none;
 }
-
+.sender {
+    font-size: 0.7rem;
+    font-weight: bold;
+}
 .name-form {
     margin: .5rem;
 }
