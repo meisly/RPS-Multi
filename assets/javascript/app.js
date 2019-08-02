@@ -39,13 +39,18 @@ connectedRef.on("value", function (snap) {
   }
 });
 
+var objDiv = document.getElementById("display-messages");
+objDiv.scrollTop = objDiv.scrollHeight;
+
+var d = $('#display-messages');
+d.scrollTop(d.prop("scrollHeight"));
 
 // onclick functions
 $("#name-btn").click(function (event) {
   event.preventDefault();
   userName = $("#choose-name").val();
   $("#pick-name-box").addClass("hidden");
-
+  $("#main-game").removeClass("hidden");
   con.update({
     userName: userName,
     score: score,

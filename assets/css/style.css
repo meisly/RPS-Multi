@@ -26,3 +26,10 @@ a {
 .right {
     float: right;
 }
+#message-box {
+    margin-top: 2rem;
+    border: solid 1px lightgrey;
+    padding: 1rem;
+
+
+}

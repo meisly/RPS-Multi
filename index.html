@@ -11,7 +11,7 @@
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+
     <!-- Link to Moment.js  -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
@@ -53,26 +53,33 @@
     </nav>
     </header>
     <main class="container">
-        <div id="pick-name-box" class="left">
-            <form id="user-name" class="form-inline">
+        <div class="row">
+            <div id="pick-name-box" class="col-12">
                 <div class="form-group">
-                    <label for="choose-name" class="form-label name-form">Enter Your Name</label>
+                        <form id="user-name" class="form-inline">
+                    <label for="choose-name" class="form-label name-form">Enter your name</label>
                     <input type="text" class="form-control name-form" id="choose-name">
                     <button type="submit" id="name-btn" class="btn btn-primary name-form">Sign in</button>
+                </form>
                 </div>
-            </form>
+            </div>
         </div>
-        <div id="game-box" class="right">
-            <div>Insert Game Here</div>
+        <div id="main-game" class="row hidden">
+            <div class="col-6">
+                <div id="message-box" class="">
+                    <div id="display-messages" class="pre-scrollable"></div>
+                    <form class="">
+                        <input type="text" class="form-control message-form" id="message">
+                        <button type="submit" id="message-btn" class="btn btn-primary message-form">Send</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6">
+                <div id="game-box" class="right">
+                    <div>Insert Game Here</div>
+                </div>
+            </div>
         </div>
-        <div id="message-box" class="">
-            <div id="display-messages"></div>
-            <form class="">
-                <input type="text" class="form-control message-form" id="message">
-                <button type="submit" id="message-btn" class="btn btn-primary message-form">Send</button>
-            </form>
-        </div>
-
 
     </main>
 
