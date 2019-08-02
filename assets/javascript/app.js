@@ -1,7 +1,7 @@
 //global variables
 
 var userName = "";
-
+var sender = "";
 var messageText = "";
 var timeSent = 0;
 var score = 0;
@@ -54,6 +54,7 @@ $("#name-btn").click(function (event) {
 
 $("#message-btn").click(function (event) {
   event.preventDefault();
+
   if (userName != "") {
     messageText = $("#message").val().trim();
     timeSent = moment().format("ddd h:mm A");
@@ -71,6 +72,7 @@ $("#message-btn").click(function (event) {
 messages.on("child_added", function (snap) {
   messageText = snap.val().message;
   timeSent = snap.val().time;
+  sender = snap.val().sender;
   updateMessageDisplay();
 });
 
@@ -78,7 +80,7 @@ messages.on("child_added", function (snap) {
 
 
 function updateMessageDisplay() {
-  var senderInfo = $("<p>").html(userName + "  " + `<em class="timestamp"> ${timeSent} </em>`);
+  var senderInfo = $("<p>").html(sender + "  " + `<em class="timestamp"> ${timeSent} </em>`);
   var messageP = $("<p>").text(messageText);
 
   $("#display-messages").append(senderInfo);
