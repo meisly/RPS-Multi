@@ -43,3 +43,9 @@ a {
 .btn {
     margin-top: .5rem;
 }
+.rps-choice {
+    cursor: pointer;
+}
+.unclickable {
+    pointer-events: none;
+}

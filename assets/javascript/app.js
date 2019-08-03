@@ -25,23 +25,23 @@ var database = firebase.database();
 
 var players = database.ref("/players");
 var messages = database.ref("/messages");
-var games = database.ref("/games");
+var moves = database.ref("/moves");
 
 var connectedRef = database.ref(".info/connected");
 
-var con = null;  // empty variable will hold reference to a firebase object under the players directory. represents user by connection
+var connectedUser = null;  // empty variable will hold reference to a firebase object under the players directory. represents user by connection
 
 
 // Keeps track of players who are connected and removes when they disconnect
 connectedRef.on("value", function (snap) {
   if (snap.val()) {
 
-    con = players.push({
+    connectedUser = players.push({
       userName: userName,
       score: score,
     });
 
-    con.onDisconnect().remove();
+    connectedUser.onDisconnect().remove();
   }
 });
 
@@ -58,7 +58,7 @@ $("#name-btn").click(function (event) {
 
   buttomScroll();
 
-  con.update({
+  connectedUser.update({
     userName: userName,
     score: score,
   })
@@ -70,15 +70,11 @@ $("#message-btn").click(function (event) {
 
   if (userName != "") {
     messageText = $("#message").val().trim();
-    timeSent = moment().format("ddd h:mm A");
+
+    addMessagetoDB(messageText, userName);
 
     $("#message").val("");
 
-    messages.push({
-      time: timeSent,
-      sender: userName,
-      message: messageText,
-    })
   }
 })
 
@@ -92,6 +88,15 @@ messages.on("child_added", function (snap) {
   buttomScroll();
 });
 
+//takes in message text and sender and pushes messages to firebase
+function addMessagetoDB(message, from) {
+  timeSent = moment().format("ddd h:mm A");
+  messages.push({
+    time: timeSent,
+    sender: from,
+    message: message,
+  })
+}
 
 //updates messages in html
 function updateMessageDisplay() {
@@ -110,12 +115,98 @@ function buttomScroll() {
 }
 
 //################################# Game Logic ####################################################
+//RPS buttons onclick
+$(document).on("click", ".rps-choice", function () {
+  var choice = $(this).data("name");
+  var display = $(this).data("display");
 
-//Join game
-$("#play-rps").click(function () {
-  
+  moves.push({
+    playerId: connectedUser.key,
+    player: userName,
+    move: choice,
+    mov: display
+  });
+  addMessagetoDB(`${userName} picked.  Someone else get in there and play!`, "God");
+  $(".rps-choice").addClass("unclickable");
 });
 
-$("document").on("click", ".pic", function () {
+//Updates winner score on win
+function playerWin(playerName, mov1, mov2) {
+  addMessagetoDB(`${playerName} WON! HOly Crud! ${mov1} beats ${mov2}`, "God");
+  if (playerName === userName) {
+    score++;
 
+    connectedUser.update({
+      score: score
+    });
+  }
+
+  moves.remove();
+  $(".rps-choice").removeClass("unclickable");
+}
+
+moves.on("value", function (snapshot) {
+  if (snapshot.numChildren() === 2) {
+    var lastMoves = Object.values(snapshot.val());
+
+    var move1 = lastMoves[0];
+    var move2 = lastMoves[1];
+
+    if (move1.move === move2.move) {
+      if (userName === move1.player) {
+        addMessagetoDB(`${move1.player}, ${move2.player}, Yall some mindreading mothers! Yall tied! Too bad that doesn't win you any points`, "God");
+        moves.remove();
+      }
+    }
+    else if (move1.move === 'r') {
+      if (move2.move === 's') {
+        // Move 1 wins
+        playerWin(move1.player, move1.mov, move2.mov);
+      }
+      else {
+        playerWin(move2.player, move2.mov, mov1.mov);
+      }
+    }
+    else if (move1.move === 'p') {
+      if (move2.move === 'r') {
+        playerWin(move1.player, move1.mov, move2.mov);
+      }
+      else {
+        playerWin(move2.player, move2.mov, move1.mov);
+        // Move 2 wins
+      }
+    }
+    else if (move1.move === 's') {
+      if (move2.move === 'p') {
+        playerWin(move1.player, move1.mov, move2.mov);
+      }
+      else {
+        playerWin(move2.player, move2.mov, move1.mov);
+        // Move 2 wins
+      }
+    }
+    else {
+      //fuck
+    }
+  }
+});
+
+players.on("value", function (snap) {
+  $("#scoreboard tbody").empty();
+  snap.forEach(function (snip) {
+    var player = snip.val().userName;
+    var currentScore = snip.val().score;
+
+    var row = $("<tr>");
+
+    var playerCol = $("<td>").text(player);
+    var currentScoreCol = $("<td>").text(currentScore);
+
+
+    row.append(playerCol, currentScoreCol);
+    $("#scoreboard tbody").append(row);
+  });
+  // Handle the errors
+}, function (errorObject) {
+  console.log("Errors handled: " + errorObject.code);
 });
