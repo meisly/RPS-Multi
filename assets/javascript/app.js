@@ -120,14 +120,15 @@ $(document).on("click", ".rps-choice", function () {
   var choice = $(this).data("name");
   var display = $(this).data("display");
 
+  addMessagetoDB(`${userName} picked...`, "God");
+  $(".rps-choice").addClass("unclickable");
+
   moves.push({
     playerId: connectedUser.key,
     player: userName,
     move: choice,
     mov: display
   });
-  addMessagetoDB(`${userName} picked.  Someone else get in there and play!`, "God");
-  $(".rps-choice").addClass("unclickable");
 });
 
 //Updates winner score on win
@@ -139,8 +140,9 @@ function playerWin(playerName, mov1, mov2) {
     connectedUser.update({
       score: score
     });
-    moves.remove();
   }
+
+  moves.remove();
   $(".rps-choice").removeClass("unclickable");
 }
 
@@ -153,10 +155,10 @@ moves.on("value", function (snapshot) {
     var move2 = lastMoves[1];
 
     if (move1.move === move2.move) {
-      if (userName === move1.player) {
+      if (userName === move2.player) {
         addMessagetoDB(`${move1.player}, ${move2.player}, Yall some mindreading mothers! Yall tied! Too bad that doesn't win you any points`, "God");
-        moves.remove();
       }
+      moves.remove();
     }
     else if (move1.move === 'r') {
       if (move2.move === 's') {
@@ -164,7 +166,7 @@ moves.on("value", function (snapshot) {
         playerWin(move1.player, move1.mov, move2.mov);
       }
       else {
-        playerWin(move2.player, move2.mov, mov1.mov);
+        playerWin(move2.player, move2.mov, move1.mov);
       }
     }
     else if (move1.move === 'p') {
