@@ -145,7 +145,8 @@ function playerWin(playerName, mov1, mov2) {
 }
 
 moves.on("value", function (snapshot) {
-  if (snapshot.numChildren() === 2) {
+ 
+  if (snapshot.numChildren() >= 2) {
     var lastMoves = Object.values(snapshot.val());
 
     var move1 = lastMoves[0];
