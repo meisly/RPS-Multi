@@ -158,6 +158,7 @@ moves.on("value", function (snapshot) {
       if (userName === move2.player) {
         addMessagetoDB(`${move1.player}, ${move2.player}, Yall some mindreading mothers! Yall tied! Too bad that doesn't win you any points`, "God");
       }
+      $(".rps-choice").removeClass("unclickable");
       moves.remove();
     }
     else if (move1.move === 'r') {
