@@ -1,10 +1,12 @@
-//global variables
+//generic global variables
 
 var userName = "";
 var sender = "";
 var messageText = "";
 var timeSent = 0;
 var score = 0;
+var wins = 0;
+var loses = 0;
 
 //###################### Firebase config and Firebase variable ########################################
 // Your web app's Firebase configuration
@@ -23,9 +25,11 @@ var database = firebase.database();
 
 var players = database.ref("/players");
 var messages = database.ref("/messages");
+var games = database.ref("/games");
 
 var connectedRef = database.ref(".info/connected");
-var con = "";  // empty variable will hold reference to a firebase object under the players directory. represents user by connection
+
+var con = null;  // empty variable will hold reference to a firebase object under the players directory. represents user by connection
 
 
 // Keeps track of players who are connected and removes when they disconnect
@@ -47,7 +51,7 @@ connectedRef.on("value", function (snap) {
 //sign in before playing updates player info in DB. after sign-in messenger and game appear
 $("#name-btn").click(function (event) {
   event.preventDefault();
-  
+
   userName = $("#choose-name").val();
   $("#pick-name-box").addClass("hidden");
   $("#main-game").removeClass("hidden");
@@ -99,8 +103,19 @@ function updateMessageDisplay() {
 }
 
 //keeps messenger window scrolled to bottom
-function buttomScroll () {
+function buttomScroll() {
   var d = $('#display-messages');
   console.log(d.prop("scrollHeight"));
   d.scrollTop(d.prop("scrollHeight"));
 }
+
+//################################# Game Logic ####################################################
+
+//Join game
+$("#play-rps").click(function () {
+  
+});
+
+$("document").on("click", ".pic", function () {
+
+});

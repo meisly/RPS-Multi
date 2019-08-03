@@ -36,3 +36,10 @@ a {
 
 
 }
+.pic {
+    max-width: 30%;
+    margin: 0.5rem;
+}
+.btn {
+    margin-top: .5rem;
+}
