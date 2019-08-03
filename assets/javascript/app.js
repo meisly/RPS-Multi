@@ -132,16 +132,15 @@ $(document).on("click", ".rps-choice", function () {
 
 //Updates winner score on win
 function playerWin(playerName, mov1, mov2) {
-  addMessagetoDB(`${playerName} WON! HOly Crud! ${mov1} beats ${mov2}`, "God");
   if (playerName === userName) {
+    addMessagetoDB(`${playerName} WON! HOly Crud! ${mov1} beats ${mov2}`, "God");
     score++;
 
     connectedUser.update({
       score: score
     });
+    moves.remove();
   }
-
-  moves.remove();
   $(".rps-choice").removeClass("unclickable");
 }
 
